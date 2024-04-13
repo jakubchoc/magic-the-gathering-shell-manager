@@ -11,10 +11,9 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class Api {
+import static com.example.magicthegatheringshellapplication.util.Text.scryfall_url;
 
-    @Value("${scryfall.url}")
-    private String url;
+public class Api {
 
     public <T> T getByFullPath(String path, Class<T> clazz) {
         HttpRequest request = HttpRequest.newBuilder()
@@ -55,7 +54,7 @@ public class Api {
     }
 
     private String buildUrl(String path) {
-        return url + path;
+        return scryfall_url + path;
     }
 
     private <T> T mapResponse(String body, Class<T> clazz) {

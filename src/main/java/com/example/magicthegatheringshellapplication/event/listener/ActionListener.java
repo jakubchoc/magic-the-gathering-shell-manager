@@ -1,7 +1,7 @@
 package com.example.magicthegatheringshellapplication.event.listener;
 
-import com.example.magicthegatheringshellapplication.ShellManager;
 import com.example.magicthegatheringshellapplication.event.PictureFromSetEvent;
+import com.example.magicthegatheringshellapplication.service.CardService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class ActionListener {
 
-    private ShellManager manager;
+    private CardService cardService;
     @EventListener
     public void clickOnCardInSet(PictureFromSetEvent event) {
-        manager.name(event.cardName());
+        cardService.getCardByName(event.cardName());
     }
 }

@@ -1,5 +1,6 @@
 package com.example.magicthegatheringshellapplication.util;
 
+import com.example.magicthegatheringshellapplication.exception.HttpRequestFailedException;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;

@@ -7,4 +7,7 @@ public class Text {
     public static final String sets_value = "<sort by> <reversed sort> Get all sets. It is possible to sort by [name, date, card_count, released_at]. Than you can chose reverse sort true/false";
     public static final String set_value = "<sort by> Get set by code sets.";
 
+
+    public static final String scryfall_url = "https://api.scryfall.com";
+
 }
