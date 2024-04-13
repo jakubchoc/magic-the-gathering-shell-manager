@@ -37,9 +37,12 @@ public class ScryfallApi extends Api {
     public Map<String, String> getCardsImagesWithNames(String searchUrl) {
         Map<String, String> cards = new HashMap<>();
         CardList cardList = getCardsBySet(searchUrl);
-        cardList.getData().forEach(
-                card -> cards.put(card.getName(), card.getImage_uris().getNormal())
-        );
+        for (Card card : cardList.getData()) {
+            if (card.getImage_uris() != null) {
+                cards.put(card.getName(), card.getImage_uris().getNormal());
+            }
+        }
+
         return cards;
     }
 }

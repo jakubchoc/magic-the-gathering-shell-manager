@@ -2,6 +2,7 @@ package com.example.magicthegatheringshellapplication.util;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -22,8 +23,36 @@ public class DialogReader {
         }
     }
 
-    private String validateAutocompleteCardNumberInput(String cardNumber, Integer totalValues) {
+    public String allSetsDialog(List<String> codes) {
         boolean done = false;
+        Printer.printGreenColor("Would you like to find specifix set? Y/n: ");
+        Scanner scanner = new Scanner(System.in);
+        String answer1 = scanner.nextLine();
+        String cardCode = null;
+        if (answer1.equals("Y")) {
+            Printer.printGreenColor("Enter the code of set you want to find: ");
+            cardCode = scanner.nextLine();
+            do {
+                if (codes.contains(cardCode)) {
+                    done = true;
+                } else {
+                    Printer.printGreenColor("Code " + cardCode + " Does not exist. Would you like to try again? Y/n: ");
+                    String answer = scanner.nextLine();
+                    if (answer.equalsIgnoreCase("n")) {
+                        return null;
+                    } else {
+                        Printer.printGreenColor("Enter the code of set you want to find: ");
+                        cardCode = scanner.nextLine();
+                    }
+                }
+            } while (!done);
+            }
+        return cardCode;
+    }
+
+
+    private String validateAutocompleteCardNumberInput(String cardNumber, Integer totalValues) {
+        boolean done;
         do {
             done = validateCardNumberInput(cardNumber, totalValues);
             if (done) {
@@ -44,7 +73,7 @@ public class DialogReader {
     }
 
     private Boolean validateCardNumberInput(String cardNumber, Integer totalValues) {
-        Integer parsedResponse = null;
+        int parsedResponse;
         try {
             parsedResponse = Integer.parseInt(cardNumber);
         } catch (NumberFormatException e) {
@@ -59,4 +88,5 @@ public class DialogReader {
         }
         return true;
     }
+
 }

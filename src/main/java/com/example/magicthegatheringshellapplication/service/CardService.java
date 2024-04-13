@@ -5,12 +5,12 @@ import com.example.magicthegatheringshellapplication.dto.Autocomplete;
 import com.example.magicthegatheringshellapplication.dto.Card;
 import com.example.magicthegatheringshellapplication.dto.Set;
 import com.example.magicthegatheringshellapplication.dto.SetObject;
-import com.example.magicthegatheringshellapplication.util.DialogReader;
-import com.example.magicthegatheringshellapplication.util.ImageViewer;
-import com.example.magicthegatheringshellapplication.util.SetViewer;
-import com.example.magicthegatheringshellapplication.util.TableBuilder;
+import com.example.magicthegatheringshellapplication.util.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -67,6 +67,13 @@ public class CardService {
     public void getAllSets(String sortBy, String reserveSort) {
         Set set = api.getSets();
         tableBuilder.buildTableForSets(set.getData(), sortBy, reserveSort).print();
+        List<String> codes = new ArrayList<>();
+        set.getData().forEach(code -> codes.add(code.getCode()));
+
+        String setCode = dialog.allSetsDialog(codes);
+        if (setCode != null) {
+            getSet(setCode);
+        }
     }
 
     public void getSet(String setName) {
@@ -80,6 +87,7 @@ public class CardService {
                     .addRow("Digital", setObject.getDigital().toString())
                     .print();
             var cards = api.getCardsImagesWithNames(setObject.getSearch_uri());
+            Printer.printYellowColor("Loading...");
             setViewer.showSet(cards, setObject.getName());
         }
     }
